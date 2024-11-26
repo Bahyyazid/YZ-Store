@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderActivity"
+    android:background="#000000">
+
+
+    <include
+        android:id="@+id/ProductPic"
+        layout="@layout/product_content"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <ImageButton
+        android:id="@+id/CallButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/call"
+        app:layout_constraintBottom_toTopOf="@+id/CompleteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/CancelButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="30dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="9dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/ProductPic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="280dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center"
+            android:text="Order Status"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ProductPic"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginBottom="7dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+
+    <ImageButton
+        android:id="@+id/CompleteButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/complete"
+        app:layout_constraintBottom_toTopOf="@+id/CancelButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/CallButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/confirmTitle"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|start|center_vertical"
+            android:text="Confirming"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/manufactureTitle"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|start|center_vertical"
+            android:text="Manufacturing"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/deliveringTitle"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|start|center_vertical"
+            android:text="Delivering"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/deliveredTitle"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|start|center_vertical"
+            android:text="Delivered"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/completedTitle"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|start|center_vertical"
+            android:text="Completed"
+            android:textColor="#85E801"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/recalledTitle"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_vertical|end"
+            android:text="Recalled"
+            android:textColor="#FFDE00"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/cancelledTitle"
+            android:layout_width="280dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_vertical|end"
+            android:text="Cancelled"
+            android:textColor="#FD3030 "
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dateStart"
+                android:layout_width="140dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_black"
+                android:gravity="center|start|center_vertical"
+                android:text="28-12-2024"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dateEnd"
+                android:layout_width="140dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_black"
+                android:gravity="center|end|center_vertical"
+                android:text="29-12-2024"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

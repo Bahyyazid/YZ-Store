@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderActivity"
+    android:background="#000000">
+
+
+    <TextView
+        android:id="@+id/mainTitle2"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="41dp"
+        android:fontFamily="@font/roboto_black"
+        android:gravity="center"
+        android:text="Thanks for using our Service!"
+        android:textColor="#FFFFFF"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toTopOf="@+id/BackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="82dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/mainicon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="280dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center"
+            android:text="Order Completed"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/BackButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="89dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/mainicon"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/mainTitle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/completeicon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

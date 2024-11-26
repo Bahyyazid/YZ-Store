@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YZ Store Manage Categories</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #222;
+        }
+
+        td img {
+            width: 100%;
+            height: auto;
+            max-width: 250px;
+            object-fit: cover;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            width: 90%;
+            background-color: #222;
+            color: white;
+            border: none;
+        }
+
+        .custom-file-upload {
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            background-color: #333;
+            padding: 10px 20px;
+            text-align: center;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #555;
+        }
+
+        input[type="file"] {
+            color: white;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #add-category-btn {
+            margin-top: 20px;
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Categories</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Category Photo</th>
+                <th>Category Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="category-list">
+            <!-- Category rows will be dynamically inserted here -->
+        </tbody>
+    </table>
+    <button id="add-category-btn" onclick="addCategoryRow()">Add Category</button>
+    <button id="Home" onclick="location.href='index.html'">Home</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getDatabase, ref, get, push, set, remove } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1n0P3lCot_c0eVBikBGTJi23S9R2qS5w",
+            authDomain: "yz-store-986db.firebaseapp.com",
+            databaseURL: "https://yz-store-986db-default-rtdb.firebaseio.com",
+            projectId: "yz-store-986db",
+            storageBucket: "yz-store-986db.firebasestorage.app",
+            messagingSenderId: "464523214829",
+            appId: "1:464523214829:web:2c17baaa87ef12fd8631e4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const storage = getStorage(app);
+
+        const categoryList = document.getElementById('category-list');
+
+        async function fetchCategories() {
+            const snapshot = await get(ref(db, 'Categories'));
+            return snapshot.exists() ? snapshot.val() : {};
+        }
+
+        async function loadInitialData() {
+            const categories = await fetchCategories();
+            if (Object.keys(categories).length === 0) {
+                addCategoryRow();
+            } else {
+                let index = 1;
+                for (const categoryId in categories) {
+                    const category = categories[categoryId];
+                    addCategoryRow(index++, category, categoryId);
+                }
+            }
+        }
+
+        function addCategoryRow(rowIndex = 1, categoryData = {}, categoryId = "") {
+            const newRow = document.createElement('tr');
+            newRow.id = `row-${rowIndex}`;
+            newRow.dataset.categoryId = categoryId;
+
+            newRow.innerHTML = `
+                <td>${rowIndex}</td>
+                <td>
+                    <img id="preview-${rowIndex}" src="${categoryData.CategoryPictureLink || ''}" alt="Category Image">
+                    <br>
+                    <label for="file-upload-${rowIndex}" class="custom-file-upload">
+                        Choose File
+                    </label>
+                    <input type="file" id="file-upload-${rowIndex}" accept="image/*" onchange="handleFileChange(event, ${rowIndex})" style="display: none;">
+                </td>
+                <td>
+                    <input type="text" placeholder="Category Name" value="${categoryData.CategoryName || ''}">
+                </td>
+                <td>
+                    <button onclick="handleSave(${rowIndex})">Save</button>
+                    <button onclick="handleDelete(${rowIndex})">Delete</button>
+                </td>
+            `;
+            categoryList.appendChild(newRow);
+        }
+
+        window.addCategoryRow = function () {
+            const rowIndex = categoryList.rows.length + 1;
+            addCategoryRow(rowIndex);
+        };
+
+        window.handleFileChange = function (event, index) {
+            const file = event.target.files[0];
+            const previewImage = document.getElementById(`preview-${index}`);
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.handleSave = async function (index) {
+            const row = document.getElementById(`row-${index}`);
+            const categoryName = row.querySelector('input[type="text"]').value;
+            const imageInput = row.querySelector('input[type="file"]');
+            const imageFile = imageInput.files[0];
+            const categoryId = row.dataset.categoryId || push(ref(db, 'Categories')).key;
+
+            let imageUrl = row.querySelector(`#preview-${index}`).src;
+
+            if (imageFile) {
+                const imageRef = storageRef(storage, `images/${categoryId}`);
+                await uploadBytes(imageRef, imageFile);
+                imageUrl = await getDownloadURL(imageRef);
+            }
+
+            const categoryData = {
+                CategoryName: categoryName,
+                CategoryPictureLink: imageUrl
+            };
+
+            await set(ref(db, `Categories/${categoryId}`), categoryData);
+            row.dataset.categoryId = categoryId;
+            alert("Category saved successfully.");
+        };
+
+        window.handleDelete = async function (index) {
+            const row = document.getElementById(`row-${index}`);
+            const categoryId = row.dataset.categoryId;
+            const categoryImageSrc = row.querySelector(`#preview-${index}`).src;
+
+            if (!categoryId) {
+                alert("This category is not saved yet.");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to delete this category?")) {
+                return;
+            }
+
+            if (categoryImageSrc) {
+                const imageRef = storageRef(storage, categoryImageSrc);
+                await deleteObject(imageRef).catch((error) => {
+                    console.error("Failed to delete category image:", error);
+                });
+            }
+
+            await remove(ref(db, `Categories/${categoryId}`));
+            categoryList.removeChild(row);
+            alert("Category deleted successfully.");
+        };
+
+        loadInitialData();
+    </script>
+</body>
+</html>

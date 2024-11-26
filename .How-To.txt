@@ -1,0 +1,10 @@
+git init
+git add .
+git branch -m master main
+git commit -m "Keterangan"
+git remote add origin https://github.com/Bahyyazid/PemrogramanAplikasiPerangkatBergerak.git
+git fetch origin master:tmp
+git rebase tmp
+git push -u origin master
+
+

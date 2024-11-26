@@ -1,0 +1,51 @@
+Categories
+	|
+	Categories id
+		|
+		CategoryName
+		CategoryPictureLink
+
+Products
+	|
+	Product id
+		|
+		MaxQuantity 
+		ProductCategory
+		ProductName
+		ProductPictureLink
+		ProductPrice
+		isIDR
+		isSoldOut
+		
+
+Users
+	|
+	User id
+		|
+		address
+       		email
+		name
+		phone
+		profilePic
+
+Orders
+	|
+	Order ID
+		|
+		ProductPictureLink
+		User id 
+		ProductName
+		ProductPrice
+		RecepientAddress
+		RecepientPhone
+		RecepientName
+		Quantity
+		OrderStatus
+		StartDate
+		EndDate
+
+
+
+
+		
+	 

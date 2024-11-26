@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity"
+    android:background="#000000">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ProfilePic"
+        android:layout_width="155dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="126dp"
+        android:layout_marginBottom="33dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/CircleImageView"
+        app:srcCompat="@drawable/resource_default" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/ProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_horizontal"
+            android:text="Name"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/MyOrderButton"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_horizontal"
+            android:text="My Order"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/EditProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_horizontal"
+            android:text="Edit Profile"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/AboutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_horizontal"
+            android:text="About"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/LogoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center|center_horizontal"
+            android:paddingTop="40dp"
+            android:text="Log Out"
+            android:textAlignment="center"
+            android:textColor="#FD3030 "
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

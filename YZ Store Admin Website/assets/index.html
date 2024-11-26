@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YZ Store Order and Product Management</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #222;
+        }
+
+        td img {
+            width: 100px;
+            height: auto;
+        }
+
+        select {
+            background-color: #222;
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        select option {
+            background-color: #222;
+            color: white;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 5px;
+            width: 90%;
+            background-color: #222;
+            color: white;
+            border: none;
+        }
+
+        .action-btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>YZ Store Order and Product Management</h1>
+    <div>
+        <button id="EditProduct" onclick="location.href='EditProduct.html'">Edit Product</button>
+        <button id="EditCategory" onclick="location.href='EditCategory.html'">Edit Category</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Photo</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Recipient Name</th>
+                <th>Phone Number</th>
+                <th>Seller Phone</th>
+                <th>Address</th>
+                <th>Quantity</th>
+                <th>Order Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="ordersTable">
+            <!-- Rows will be dynamically generated -->
+        </tbody>
+    </table>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getDatabase, ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1n0P3lCot_c0eVBikBGTJi23S9R2qS5w",
+            authDomain: "yz-store-986db.firebaseapp.com",
+            databaseURL: "https://yz-store-986db-default-rtdb.firebaseio.com",
+            projectId: "yz-store-986db",
+            storageBucket: "yz-store-986db.firebasestorage.app",
+            messagingSenderId: "464523214829",
+            appId: "1:464523214829:web:2c17baaa87ef12fd8631e4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const ordersRef = ref(database, 'Orders');
+
+    
+
+        // Function to check the session status and log the authToken and authExpiration
+        // Check if authToken and authExpiration are missing or expired
+        // Function to update the color of the dropdown based on its value
+        function updateDropdownColor(selectElement) {
+            const value = selectElement.value;
+            let backgroundColor;
+
+            switch (value) {
+                case "1": // Confirming
+                    backgroundColor = "#0a5bab";
+                    break;
+                case "5": // Completed
+                    backgroundColor = "#0aab28";
+                    break;
+                case "6": // Recalled
+                    backgroundColor = "#bd7708";
+                    break;
+                case "7": // Cancelled
+                    backgroundColor = "#bd1a08";
+                    break;
+                default: // Other statuses
+                    backgroundColor = "#222"; // Default background color
+            }
+
+            selectElement.style.backgroundColor = backgroundColor;
+        }
+
+        onValue(ordersRef, (snapshot) => {
+            const ordersTable = document.getElementById("ordersTable");
+            ordersTable.innerHTML = ""; 
+
+            snapshot.forEach((childSnapshot) => {
+                const order = childSnapshot.val();
+                const orderId = childSnapshot.key;
+
+                const row = `
+                    <tr data-order-id="${orderId}">
+                        <td><img src="${order.ProductPictureLink || 'placeholder.jpg'}" alt="Product Photo"></td>
+                        <td>${order.ProductName || 'Unknown'}</td>
+                        <td>${order.ProductPrice || 'Unknown'}</td>
+                        <td>${order.RecipientName || 'Unknown'}</td>
+                        <td>${order.RecipientPhone || 'Unknown'}</td>
+                        <td>
+                            <input type="text" value="62" class="country-code" style="width: 40px;" title="Country Code">
+                            <label>
+                                <input type="checkbox" class="add-country-code">
+                                Add Country Code
+                            </label>
+                            <br>
+                            <input type="text" value="${order.SellerPhone || ''}" class="seller-phone" placeholder="Enter Seller Phone">
+                        </td>
+                        <td>${order.RecipientAddress || 'Unknown'}</td>
+                        <td>${order.Quantity || 0}</td>
+                        <td>
+                            <select class="order-status" data-order-id="${orderId}">
+                                <option value="1" ${order.OrderStatus === 1 ? 'selected' : ''}>Confirming</option>
+                                <option value="2" ${order.OrderStatus === 2 ? 'selected' : ''}>Manufacturing</option>
+                                <option value="3" ${order.OrderStatus === 3 ? 'selected' : ''}>Delivering</option>
+                                <option value="4" ${order.OrderStatus === 4 ? 'selected' : ''}>Delivered</option>
+                                <option value="5" ${order.OrderStatus === 5 ? 'selected' : ''}>Completed</option>
+                                <option value="6" ${order.OrderStatus === 6 ? 'selected' : ''}>Recalled</option>
+                                <option value="7" ${order.OrderStatus === 7 ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="save-btn action-btn">Save</button>
+                            <button class="delete-btn action-btn">Delete</button>
+                        </td>
+                    </tr>
+                `;
+
+                ordersTable.insertAdjacentHTML('beforeend', row);
+            });
+
+            document.querySelectorAll('.order-status').forEach((dropdown) => {
+                updateDropdownColor(dropdown); // Set initial color
+
+                dropdown.addEventListener('change', () => {
+                    updateDropdownColor(dropdown);
+
+                    const row = dropdown.closest('tr');
+                    const orderId = row.dataset.orderId;
+                    const newStatus = dropdown.value;
+
+                    // Update Firebase based on new status
+                    let updateData = { OrderStatus: Number(newStatus) };
+
+                    if (newStatus === "5" || newStatus === "7") {
+                        // Add EndDate for Completed (5) or Cancelled (7)
+                        const currentDate = new Date();
+                        const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${
+                            (currentDate.getMonth() + 1).toString().padStart(2, '0')
+                        }/${currentDate.getFullYear()}`;
+                        updateData.EndDate = formattedDate;
+                    }
+
+                    update(ref(database, `Orders/${orderId}`), updateData).then(() => {
+                        alert("Order status updated successfully!");
+                    }).catch((error) => {
+                        console.error("Error updating order:", error);
+                    });
+                });
+            });
+
+            document.querySelectorAll('.save-btn').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const row = button.closest('tr');
+                    const orderId = row.dataset.orderId;
+                    const countryCode = row.querySelector('.country-code').value.trim();
+                    const addCountryCode = row.querySelector('.add-country-code').checked;
+                    let sellerPhone = row.querySelector('.seller-phone').value.trim();
+                    const orderStatus = row.querySelector('.order-status').value;
+
+                    if (!sellerPhone) {
+                        alert("Seller Phone number must be filled out!");
+                        return;
+                    }
+
+                    let fullPhone = sellerPhone;
+                    if (addCountryCode) {
+                        if (sellerPhone.startsWith('0')) {
+                            sellerPhone = sellerPhone.slice(1);
+                        }
+                        fullPhone = `${countryCode}${sellerPhone}`;
+                    }
+
+                    // Get current date
+                    const currentDate = new Date();
+                    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${
+                        (currentDate.getMonth() + 1).toString().padStart(2, '0')
+                    }/${currentDate.getFullYear()}`;
+
+                    // Only add EndDate for Completed (5) or Cancelled (7)
+                    let updateData = {
+                        SellerPhone: fullPhone,
+                        OrderStatus: Number(orderStatus)
+                    };
+
+                    if (orderStatus === "5" || orderStatus === "7") {
+                        updateData.EndDate = formattedDate; // Add EndDate only for Completed or Cancelled
+                    }
+
+                    // Update the order in Firebase
+                    update(ref(database, `Orders/${orderId}`), updateData).then(() => {
+                        alert("Order Updated Successfully!");
+                    }).catch((error) => {
+                        console.error("Error updating order:", error);
+                    });
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const row = button.closest('tr');
+                    const orderId = row.dataset.orderId;
+                    if (confirm("Are you sure you want to delete this order?")) {
+                        remove(ref(database, `Orders/${orderId}`)).then(() => {
+                            row.remove();
+                            alert("Order Deleted Successfully!");
+                        }).catch((error) => {
+                            console.error("Error deleting order:", error);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

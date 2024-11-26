@@ -1,0 +1,11 @@
+{
+  "hosting": {
+  	"site": "yz-store-986db",
+    "public": "assets",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

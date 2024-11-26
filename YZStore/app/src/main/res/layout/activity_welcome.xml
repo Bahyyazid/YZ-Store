@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".WelcomeActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-30dp">
+
+    <ImageButton
+        android:id="@+id/SignupButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="16dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/signup"
+        app:layout_constraintBottom_toTopOf="@+id/SignupGoogle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/LoginButton"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="16dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/login"
+        app:layout_constraintBottom_toTopOf="@+id/SignupButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/SignupGoogle"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="128dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/signupgoogle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="99dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="156dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/LoginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/WelcomeTo"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center"
+            android:text="WELCOME TO"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp" />
+
+        <ImageView
+            android:id="@+id/Title"
+            android:layout_width="280dp"
+            android:layout_height="88dp"
+            android:src="@drawable/yz_store_icon" />
+
+        <TextView
+            android:id="@+id/Subtitle"
+            android:layout_width="280dp"
+            android:layout_height="23dp"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="center"
+            android:text="Bahyyazid's Personal Manufacturing Platform"
+            android:textColor="#FFFFFF"
+            android:textSize="12.2sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
